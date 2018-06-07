@@ -26,7 +26,7 @@
                                         <rect key="frame" x="323" y="13" width="44" height="44"/>
                                         <state key="normal" image="icon_plus"/>
                                         <connections>
-                                            <segue destination="NkR-2v-hmG" kind="show" id="Isr-DE-qff"/>
+                                            <action selector="goAddArticlePage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P51-9P-z35"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Journals" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8J-yg-jys">
@@ -115,6 +115,7 @@
                     <navigationItem key="navigationItem" id="we1-52-M0I"/>
                     <connections>
                         <outlet property="articleTableView" destination="ZQ7-vc-ekg" id="HDg-aU-c9Q"/>
+                        <segue destination="NkR-2v-hmG" kind="show" identifier="GO_ADD" id="p13-Y1-DP3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -8,5 +8,12 @@
 
 import Foundation
 class Article {
-
+    let title: String
+    let content: String
+    let autoId: String
+    init(title: String, content: String, autoId: String) {
+        self.title = title
+        self.content = content
+        self.autoId = autoId
+    }
 }

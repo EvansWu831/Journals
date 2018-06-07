@@ -14,6 +14,7 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var addArticleImageView: UIImageView!
     @IBOutlet weak var addArticleTextField: UITextField!
     @IBOutlet weak var addArticleTextView: UITextView!
+    var articleManager = ArticleManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +31,16 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
     //點擊SAVE按鈕
     @IBAction func addArticle(_ sender: UIButton) {
         //設置到本地資料庫
-        let userDefaults = UserDefaults.standard
         guard let image: UIImage = addArticleImageView.image else { return }
-        let imageData = UIImageJPEGRepresentation(image, 1.0)
         guard let title = addArticleTextField.text else { return }
         guard let content = addArticleTextView.text else { return }
-        userDefaults.set(imageData, forKey: "\(title)ARTICLE_IMAGE")
-        userDefaults.set(title, forKey: "\(title)ARTICLE_TITLE")
-        userDefaults.set(content, forKey: "\(title)ARTICLE_CONTENT")
-        
+        let userDefaults = UserDefaults.standard
+        let autoid = randomString(length: 10)
+        let imageData = UIImageJPEGRepresentation(image, 1.0)
+        userDefaults.set(["title": title, "content": content, "autoid": autoid], forKey: "\(autoid)")
+        userDefaults.set(imageData, forKey: "IMAGE_\(autoid)")
+        articleManager.getArticle()
+        self.dismiss(animated: true, completion:nil)
     }
     
     //設置點擊相片功能
@@ -69,6 +71,23 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //隨機字串
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
 
 }

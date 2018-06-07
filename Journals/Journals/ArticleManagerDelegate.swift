@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ArticleManageDelegate: class {
-    
+protocol ArticleManagerDelegate: class {
+    func manager(_ manager: ArticleManager, didFetch articles: [Article])
 }
