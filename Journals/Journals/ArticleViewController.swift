@@ -19,7 +19,12 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = articleTableView.dequeueReusableCell(withIdentifier: "ARTICLE_CELL", for: indexPath) as! ArticleTableViewCell
-        cell.articleImageView.image = #imageLiteral(resourceName: "icon_photo")
+        if let image: Data = UserDefaults.standard.value(forKey: "EVANSARTICLE_IMAGE") as? Data {
+            cell.articleImageView.image = UIImage(data: image)
+        } else {
+            cell.articleImageView.image = #imageLiteral(resourceName: "icon_photo")
+        }
+        
         cell.articleTitleLabel.text = "test"
         return cell
     }
@@ -30,6 +35,10 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            print("資料", key)
+        }
+        print("總共有", UserDefaults.standard.dictionaryRepresentation().count, "筆資料")
     }
 
     override func didReceiveMemoryWarning() {

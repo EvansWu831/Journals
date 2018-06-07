@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
+class ArticleManage {
+    
+    weak var delegate: ArticleManageDelegate?
+    
+    func getArticle() {
+        
+    }
+    
+}

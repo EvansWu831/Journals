@@ -129,11 +129,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X8o-2M-o2b">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X8o-2M-o2b">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vfr-Y0-Zl1">
                                 <rect key="frame" x="22" y="385" width="331" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="npm-hI-rx6"/>
+                                </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -144,7 +147,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="Tn5-Ij-5VE"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -152,8 +154,12 @@
                                 <rect key="frame" x="0.0" y="605" width="375" height="62"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HV-HJ-K4D">
-                                        <rect key="frame" x="164.5" y="16" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
+                                        <rect key="frame" x="107.5" y="9" width="160" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.44978473759999998" blue="0.4497070252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="addArticle:" destination="NkR-2v-hmG" eventType="touchUpInside" id="ssQ-SD-VBZ"/>
                                         </connections>
@@ -161,9 +167,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="8HV-HJ-K4D" firstAttribute="centerY" secondItem="8XD-uP-b8g" secondAttribute="centerY" id="WFn-Eb-qkH"/>
-                                    <constraint firstItem="8HV-HJ-K4D" firstAttribute="centerX" secondItem="8XD-uP-b8g" secondAttribute="centerX" id="b7N-Ej-JE1"/>
+                                    <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="8HV-HJ-K4D" secondAttribute="trailing" constant="107.5" id="GS2-GY-WRY"/>
+                                    <constraint firstAttribute="bottom" secondItem="8HV-HJ-K4D" secondAttribute="bottom" constant="9" id="HcV-B2-wtF"/>
+                                    <constraint firstItem="8HV-HJ-K4D" firstAttribute="leading" relation="lessThanOrEqual" secondItem="8XD-uP-b8g" secondAttribute="leading" constant="107.5" id="MoB-9U-vMe"/>
                                     <constraint firstAttribute="height" constant="62" id="bbd-fh-c2l"/>
+                                    <constraint firstItem="8HV-HJ-K4D" firstAttribute="top" secondItem="8XD-uP-b8g" secondAttribute="top" constant="9" id="dcf-xl-yQt"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Et-5c-Q9Y">
@@ -198,6 +206,7 @@
                         <outlet property="addArticleImageView" destination="X8o-2M-o2b" id="Vwf-Ya-BI3"/>
                         <outlet property="addArticleTextField" destination="Vfr-Y0-Zl1" id="GL6-RH-Rso"/>
                         <outlet property="addArticleTextView" destination="8LD-Zp-cez" id="dSj-Ys-Ylm"/>
+                        <outlet property="saveButton" destination="8HV-HJ-K4D" id="dgx-KT-1iB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PjK-Tk-w5a" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol ArticleManageDelegate: class {
-    func manage(manage: AddArticleViewController, didFetch article: Article)
+    
 }

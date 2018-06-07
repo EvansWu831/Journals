@@ -10,31 +10,41 @@ import Foundation
 import UIKit
 
 class AddArticleViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var addArticleImageView: UIImageView!
     @IBOutlet weak var addArticleTextField: UITextField!
     @IBOutlet weak var addArticleTextView: UITextView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setImage()
+        saveButton.layer.masksToBounds = true
+        saveButton.layer.cornerRadius = 22.5
     }
+    
+    //點擊Close按鈕
     @IBAction func didClose(_ sender: UIButton) {
+        self.dismiss(animated: true, completion:nil)
+    }
+    
+    //點擊SAVE按鈕
+    @IBAction func addArticle(_ sender: UIButton) {
+        //設置到本地資料庫
+        let userDefaults = UserDefaults.standard
+        guard let image: UIImage = addArticleImageView.image else { return }
+        let imageData = UIImageJPEGRepresentation(image, 1.0)
+        guard let title = addArticleTextField.text else { return }
+        guard let content = addArticleTextView.text else { return }
+        userDefaults.set(imageData, forKey: "\(title)ARTICLE_IMAGE")
+        userDefaults.set(title, forKey: "\(title)ARTICLE_TITLE")
+        userDefaults.set(content, forKey: "\(title)ARTICLE_CONTENT")
         
     }
     
-    @IBAction func addArticle(_ sender: UIButton) {
-        //設置到本地資料庫
-        guard let image: UIImage = addArticleImageView.image else { return }
-        UserDefaults.standard.set(image, forKey: "ARTICLE_IMAGE")
-        guard let title = addArticleTextField.text else { return }
-        UserDefaults.standard.set(title, forKey: "ARTICLE_TITLE")
-        guard let content = addArticleTextView.text else { return }
-        UserDefaults.standard.set(content, forKey: "ARTICLE_CONTENT")
-        //
-    }
-    
+    //設置點擊相片功能
     func setImage() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                          action: #selector(imageTapped(tapGestureRecognizer:)))
+        addArticleImageView.image = #imageLiteral(resourceName: "icon_photo")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         addArticleImageView.isUserInteractionEnabled = true
         addArticleImageView.addGestureRecognizer(tapGestureRecognizer)
     }
