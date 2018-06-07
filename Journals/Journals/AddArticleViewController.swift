@@ -15,14 +15,24 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var addArticleTextField: UITextField!
     @IBOutlet weak var addArticleTextView: UITextView!
     var articleManager = ArticleManager()
+    var articleImage: UIImage = #imageLiteral(resourceName: "icon_photo")
+    var articleTitle: String = ""
+    var articleContent: String = ""
+    var articleAutoId: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setImage()
+        setAddArticleView()
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 22.5
+        print("看看", articleTitle, articleContent, articleAutoId)
     }
-    
+    func setAddArticleView() {
+        addArticleImageView.image = articleImage
+        addArticleTextField.text = articleTitle
+        addArticleTextView.text = articleContent
+    }
     //點擊Close按鈕
     @IBAction func didClose(_ sender: UIButton) {
         self.dismiss(animated: true, completion:nil)
@@ -34,11 +44,19 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
         guard let image: UIImage = addArticleImageView.image else { return }
         guard let title = addArticleTextField.text else { return }
         guard let content = addArticleTextView.text else { return }
+        var autoId: String = ""
+        if articleAutoId.isEmpty {
+            autoId = randomString(length: 15)
+            print("新增", autoId)
+        } else {
+            autoId = articleAutoId
+            print("更新", autoId)
+        }
         let userDefaults = UserDefaults.standard
-        let autoid = randomString(length: 10)
         let imageData = UIImageJPEGRepresentation(image, 1.0)
-        userDefaults.set(["title": title, "content": content, "autoid": autoid], forKey: "\(autoid)")
-        userDefaults.set(imageData, forKey: "IMAGE_\(autoid)")
+
+        userDefaults.set(["title": title, "content": content, "autoid": autoId], forKey: "\(autoId)")
+        userDefaults.set(imageData, forKey: "IMAGE_\(autoId)")
         articleManager.getArticle()
         self.dismiss(animated: true, completion:nil)
     }

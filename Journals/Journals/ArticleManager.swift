@@ -22,10 +22,10 @@ class ArticleManager {
                         if let autoid = article["autoid"] as? String {
                             let value = Article.init(title: title, content: content, autoId: autoid)
                             articles.append(value)
-                        } else { print("沒ＩＤ") }
-                    } else { print("沒內容") }
-                } else { print("沒標題") }
-            } else{ print("沒字典") }
+                        } else {  } //handle error
+                    } else {  } //handle error
+                } else {  } //handle error
+            } else{  } //handle error
         }
         self.delegate?.manager(self, didFetch: articles)
     }

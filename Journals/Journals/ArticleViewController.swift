@@ -13,14 +13,26 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var articleTableView: UITableView!
     let articleManager = ArticleManager()
     var tableViewArticles:[Article] = []
+    var articleImage: UIImage = #imageLiteral(resourceName: "icon_photo")
+    var articleTitle: String = ""
+    var articleContent: String = ""
+    var articleAutoId: String = ""
     
     @IBAction func goAddArticlePage(_ sender: UIButton) {
+        articleImage = #imageLiteral(resourceName: "icon_photo")
+        articleTitle = ""
+        articleContent = ""
+        articleAutoId = ""
         self.performSegue(withIdentifier: "GO_ADD", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let addArticleViewController = segue.destination as? AddArticleViewController {
             addArticleViewController.articleManager = self.articleManager
+            addArticleViewController.articleContent = self.articleContent
+            addArticleViewController.articleTitle = self.articleTitle
+            addArticleViewController.articleImage = self.articleImage
+            addArticleViewController.articleAutoId = self.articleAutoId
         } else { } //handle error
     }
     
@@ -35,42 +47,58 @@ class ArticleViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = articleTableView.dequeueReusableCell(withIdentifier: "ARTICLE_CELL", for: indexPath) as! ArticleTableViewCell
-//        if let image: Data = UserDefaults.standard.value(forKey: "EVANSARTICLE_IMAGE") as? Data {
-//            cell.articleImageView.image = UIImage(data: image)
-//        } else {
-//
-//        }
+
         let imageAutoId = tableViewArticles[indexPath.row].autoId
+
         if let image: Data = UserDefaults.standard.value(forKey: "IMAGE_\(imageAutoId)") as? Data {
-            cell.articleImageView.image =  UIImage(data: image)
+            cell.articleImageView.image = UIImage(data: image)
         } else {
-            cell.articleImageView.image =  #imageLiteral(resourceName: "icon_photo")
+            cell.articleImageView.image = #imageLiteral(resourceName: "icon_photo")
         }
         cell.articleTitleLabel.text = tableViewArticles[indexPath.row].title
         return cell
     }
+    //selector
     
-
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let autoId = tableViewArticles[indexPath.row].autoId
+        articleAutoId = autoId
+        articleTitle = tableViewArticles[indexPath.row].title
+        articleContent = tableViewArticles[indexPath.row].content
+        if let imageData: Data = UserDefaults.standard.value(forKey: "IMAGE_\(autoId)") as? Data {
+            guard let image = UIImage(data: imageData)
+                
+                else {
+                articleImage =  #imageLiteral(resourceName: "icon_photo")
+                return
+                }
+            
+            articleImage = image
+        } else {
+            articleImage =  #imageLiteral(resourceName: "icon_photo")
+        }
+        self.performSegue(withIdentifier: "GO_ADD", sender: nil)
+        
+    }
+    //delete
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            let autoId = tableViewArticles[indexPath.row].autoId
+            UserDefaults.standard.removeObject(forKey: autoId)
+            UserDefaults.standard.removeObject(forKey: "IMAGE_\(autoId)")
+            self.tableViewArticles.remove(at: indexPath.row)
+            self.articleTableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         articleManager.delegate = self
         articleManager.getArticle()
-        
-        //刪除所有資料
-        for key in UserDefaults.standard.dictionaryRepresentation().keys {
-        print("\(key)")
-//        UserDefaults.standard.removeObject(forKey: "\(key)")
-        }
-        print("總共有", UserDefaults.standard.dictionaryRepresentation().count, "筆資料")
+//        for key in UserDefaults.standard.dictionaryRepresentation().keys{
+//            UserDefaults.standard.removeObject(forKey: key)
+//        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
 
