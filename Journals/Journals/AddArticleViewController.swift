@@ -26,7 +26,6 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
         setAddArticleView()
         saveButton.layer.masksToBounds = true
         saveButton.layer.cornerRadius = 22.5
-        print("看看", articleTitle, articleContent, articleAutoId)
     }
     func setAddArticleView() {
         addArticleImageView.image = articleImage
@@ -47,10 +46,8 @@ class AddArticleViewController: UIViewController, UIImagePickerControllerDelegat
         var autoId: String = ""
         if articleAutoId.isEmpty {
             autoId = randomString(length: 15)
-            print("新增", autoId)
         } else {
             autoId = articleAutoId
-            print("更新", autoId)
         }
         let userDefaults = UserDefaults.standard
         let imageData = UIImageJPEGRepresentation(image, 1.0)
